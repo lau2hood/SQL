@@ -1,0 +1,15 @@
+CREATE TABLE clothes (id INTEGER PRIMARY KEY AUTOINCREMENT, item TEXT, brand TEXT, color TEXT, quantity INTEGER, price INTEGER);
+
+INSERT INTO clothes (item, brand, color, quantity, price) VALUES ("t-shirt", "Gucci", "white", 3, 450);
+INSERT INTO clothes (item, brand, color, quantity, price) VALUES ("t-shirt", "Prada", "white", 2, 465);
+INSERT INTO clothes (item, brand, color, quantity, price) VALUES ("boots", "LL Bean", "brown", 5, 165);
+INSERT INTO clothes (item, brand, color, quantity, price) VALUES ("jacket", "Canadian Goose", "blue", 1, 275);
+INSERT INTO clothes (item, brand, color, quantity, price) VALUES ("Jeans", "Levis", "blue", 10, 55);
+
+SELECT * FROM clothes;
+
+SELECT * FROM clothes ORDER BY price;
+
+SELECT SUM(quantity) AS total_items FROM clothes;
+
+SELECT item, AVG(price) AS avg_price FROM clothes GROUP BY item;
