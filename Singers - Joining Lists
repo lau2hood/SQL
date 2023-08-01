@@ -1,0 +1,87 @@
+/* Create table about the people and what they do here */
+
+CREATE TABLE people (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT);
+    
+INSERT INTO people (name) VALUES ("Taylor Swift");
+INSERT INTO people (name) VALUES ("Harry Styles");
+INSERT INTO people (name) VALUES ("Niall Horan");
+INSERT INTO people (name) VALUES ("Shawn Mendes");
+INSERT INTO people (name) VALUES ("Brad Paisley");
+INSERT INTO people (name) VALUES ("Chris Stapleton");
+INSERT INTO people (name) VALUES ("Lainey Wilson");
+INSERT INTO people (name) VALUES ("Panic At The Disco");
+INSERT INTO people (name) VALUES ("The Beatles");
+INSERT INTO people (name) VALUES ("Johnny Cash");
+    
+CREATE TABLE songs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id INTEGER, title TEXT, genre TEXT);
+
+INSERT INTO songs (person_id, title, genre) VALUES (1,"All Too Well","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (1,"Speak Now","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (1,"Fearless","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (1,"august","Indie");
+INSERT INTO songs (person_id, title, genre) VALUES (1,"Dress","Pop");
+INSERT INTO songs(person_id, title, genre) VALUES (1,"gold rush","Indie");
+INSERT INTO songs(person_id, title, genre) VALUES (1,"I Bet You Think About Me ft. Chris Stapleton","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (2,"Watermelon Sugar","Pop");
+INSERT INTO songs (person_id, title, genre) VALUES (2,"As It Was","Pop");
+INSERT INTO songs (person_id, title, genre) VALUES (3,"This Town","Indie");
+INSERT INTO songs (person_id, title, genre) VALUES (4,"Senorita","Pop");
+INSERT INTO songs (person_id, title, genre) VALUES (4,"Stitches","Pop");
+INSERT INTO songs (person_id, title, genre) VALUES (5,"Mud on the Tires","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (5,"Beat This Summer","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (6,"White Horse","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (6,"I Bet You Think About Me ft. Chris Stapleton","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (6,"Tennessee Whiskey","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (6,"Fire Away","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (7,"Watermelon Moonshine","Country");
+INSERT INTO songs(person_id, title, genre) VALUES (7,"These Boots (Deddy's Song)","Country");
+INSERT INTO songs (person_id, title, genre) VALUES (8,"Nine in the Afternoon","Pop Rock");
+INSERT INTO songs (person_id, title, genre) VALUES (9,"Hey Jude","Classic Rock");
+INSERT INTO songs (person_id, title, genre) VALUES (9,"Love Is All You Need","Classic Rock");
+INSERT INTO songs (person_id, title, genre) VALUES (9,"Lucy in the Sky With Diamonds","Classic Rock");
+INSERT INTO songs (person_id, title, genre) VALUES (9,"Strawberry Fields Forever","Classic Rock");
+INSERT INTO songs (person_id, title, genre) VALUES (10,"A Boy Named Sue","Country");
+
+SELECT * FROM songs;
+
+CREATE TABLE homestate (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    genre_id INTEGER, country TEXT);
+
+INSERT INTO homestate (genre_id, country) VALUES (1,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (2,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (3,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (4,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (5,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (6,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (7,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (8,"UK");
+INSERT INTO homestate (genre_id, country) VALUES (9,"UK");
+INSERT INTO homestate (genre_id, country) VALUES (10,"UK");
+INSERT INTO homestate (genre_id, country) VALUES (11,"Canada");
+INSERT INTO homestate (genre_id, country) VALUES (12,"Canada");
+INSERT INTO homestate (genre_id, country) VALUES (13,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (14,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (15,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (16,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (17,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (18,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (19,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (20,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (21,"USA");
+INSERT INTO homestate (genre_id, country) VALUES (22,"UK");
+INSERT INTO homestate (genre_id, country) VALUES (23,"UK");
+INSERT INTO homestate (genre_id, country) VALUES (24,"UK");
+INSERT INTO homestate (genre_id, country) VALUES (25,"UK");
+INSERT INTO homestate (genre_id, country) VALUES (26,"USA");
+
+
+SELECT people.name, songs.title FROM people JOIN songs ON people.id = songs.person_id;
+
+SELECT people.name, songs.genre, homestate.country FROM people JOIN songs ON people.id = songs.person_id JOIN homestate on songs.id = homestate.genre_id;
+
+SELECT songs.title as British_Pop_Songs FROM songs JOIN homestate  ON songs.id = homestate.genre_id WHERE songs.genre = "Pop" AND homestate.country = "UK";
