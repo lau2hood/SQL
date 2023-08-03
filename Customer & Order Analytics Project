@@ -1,0 +1,96 @@
+/* This project attempts to answer specific questions about the dataset */
+
+/* 1. How many orders were placed in January? */
+SELECT COUNT(*)
+FROM JanSales
+WHERE length(orderID) = 6 
+AND orderID <> 'Order ID';
+
+/* 2. How many of those orders were for an iPhone? */
+SELECT COUNT(*)
+FROM JanSales
+WHERE Product = 'iPhone'
+AND length(orderID) = 6 
+AND orderID <> 'Order ID';
+
+/* 3. Select the customer account numbers for all the orders that were placed in February. */
+SELECT distinct customers.acctnum
+FROM customers
+INNER JOIN FebSales
+ON customers.order_id = FebSales.orderID
+WHERE length(orderID) = 6 
+AND orderID <> 'Order ID';
+
+/* 4. Which product was the cheapest one sold in January, and what was the price? */
+SELECT Product, MIN(price)
+FROM JanSales
+GROUP BY Product, price
+ORDER BY price ASC LIMIT 1;
+
+/* 5. What is the total revenue for each product sold in January? (Revenue can be calculated using the number of products sold and the price of the products). */
+SELECT ROUND(SUM(Quantity)*price, 2) AS revenue, Product
+FROM JanSales
+GROUP BY Product;
+
+/* 6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue? */
+SELECT Product, SUM(Quantity) AS total_sold, ROUND(SUM(Quantity)*price, 2) AS revenue
+FROM FebSales
+WHERE location = '548 Lincoln St, Seattle, WA 98101'
+GROUP BY Product;
+
+/* 7. How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers? */
+SELECT COUNT(customers.acctnum), ROUND(AVG(FebSales.price * FebSales.Quantity), 2) AS avg_spent
+FROM FebSales
+LEFT JOIN customers
+ON customers.order_id = FebSales.orderID
+WHERE FebSales.Quantity > 2
+AND length(orderID) = 6 
+AND orderID <> 'Order ID';
+
+/* 8. List all of the products sold in Los Angeles in February, and include how many of each were sold. */
+SELECT Product, SUM(Quantity)
+FROM FebSales
+WHERE location LIKE '%Los Angeles%'
+GROUP BY Product;
+
+/* 9. Which locations in New York received at least 3 orders in January, and how many orders did they each receive? */
+SELECT location, COUNT(orderID)
+FROM JanSales
+WHERE location LIKE '%NY%'
+AND length(orderID) = 6 
+AND orderID <> 'Order ID'
+GROUP BY location
+HAVING COUNT(orderID) >= 3;
+
+/* 10. How many of each type of headphone were sold in February? */
+SELECT Product, SUM(Quantity) AS quantity
+FROM FebSales
+WHERE Product LIKE '%Headphone%'
+AND length(orderID) = 6
+AND orderID <> 'Order ID'
+GROUP BY Product;
+
+/* 11. What was the average amount spent per account in February? */
+SELECT ROUND(AVG(Quantity*price), 2)
+FROM FebSales
+LEFT JOIN customers
+ON customers.order_id = FebSales.orderID
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+/* 12. What was the average quantity of products purchased per account in February? */
+SELECT (SUM(Quantity) / COUNT(customers.acctnum)) avg_quant
+FROM FebSales
+LEFT JOIN customers
+ON customers.order_id = FebSales.orderID
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID';
+
+/* 13. Which product brought in the most revenue in January and how much revenue did it bring in total? */
+SELECT Product, ROUND(SUM(Quantity)*price, 2) AS revenue
+FROM JanSales
+WHERE length(orderID) = 6
+AND orderID <> 'Order ID'
+GROUP BY Product
+ORDER BY revenue DESC
+LIMIT 1;
